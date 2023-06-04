@@ -1,11 +1,6 @@
 // ==UserScript==
 // @name         [Experimental] Code Handler
 // @namespace    http://tampermonkey.net/
-// @version      0
-// @description  Requires Latest versions of "Experimental" code that is def not gonna run prob half the time but maybe 🤙🤙
-// @author       You
-// @match        https://amt.uhaul.net/*/Dashboard
-// @match        https://vceccefinlpa002.amerco.net/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=uhaul.net
 // @grant        none
 // ==/UserScript==
