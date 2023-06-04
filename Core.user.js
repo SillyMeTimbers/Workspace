@@ -1,38 +1,51 @@
 // ==UserScript==
 // @name         [Experimental] Code Handler
 // @namespace    http://tampermonkey.net/
+// @version      0
+// @description  Requires Latest versions of "Experimental" code that is def not gonna run prob half the time but maybe 🤙🤙
 // @author       You
+// @match        https://amt.uhaul.net/*/Dashboard
+// @match        https://vceccefinlpa002.amerco.net/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=uhaul.net
-// @grant        GM_xmlhttpRequest
+// @grant        none
 // ==/UserScript==
 
-(function() {
+(async function() {
     'use strict';
+
     const UpdateVal = 1;
     const now = new Date();
     const minutes = Math.floor(now.getMinutes() / UpdateVal) * UpdateVal;
     const timeString = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate() + '-' + now.getHours() + ':' + minutes;
 
-    let url;
+    // Modify the object with the correct website names and scripts.
+    const Redirects = {
+        "amt.uhaul.net": ["WorkspaceAMT/Experimental/Core"],
+        "vceccefinlpa002.amerco.net": ["WorkspaceCisco/main/Core"]
+    };
+
     const hostname = window.location.hostname;
+    const websiteRedirects = Redirects[hostname];
 
-    if (hostname === 'amt.uhaul.net') {
-        url = "https://raw.githubusercontent.com/SillyMeTimbers/WorkspaceAMT/Experimental/Core.user.js?time=" + timeString;
-    } else if (hostname === 'vceccefinlpa002.amerco.net') {
-        url = "https://raw.githubusercontent.com/SillyMeTimbers/WorkspaceCisco/main/Core.user.js?time=" + timeString;
-    } else {
-        // You can add a fallback URL or do nothing.
-    }
+    if (websiteRedirects) {
+        for (const redirect of websiteRedirects) {
+            const githubURL = `https://raw.githubusercontent.com/SillyMeTimbers/${redirect}.user.js?time=${timeString}`;
 
-    if (url) {
-        GM_xmlhttpRequest({
-            method: "GET",
-            url: url,
-            onload: function(response) {
-                const script = document.createElement('script');
-                script.textContent = response.responseText;
-                document.head.appendChild(script);
+            try {
+                const response = await fetch(githubURL);
+
+                if (response.ok) {
+                    const scriptText = await response.text();
+                    const script = document.createElement('script');
+                    script.textContent = scriptText;
+                    document.head.appendChild(script);
+                } else {
+                    console.log(`Failed to fetch script: ${redirect}`);
+                }
+            } catch (error) {
+                console.log(`An error occurred while fetching script: ${redirect}`);
+                console.error(error);
             }
-        });
+        }
     }
 })();
