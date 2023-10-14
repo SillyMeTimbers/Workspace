@@ -16,7 +16,8 @@
     // Modify the object with the correct website names and scripts.
     const Redirects = {
         "amt.uhaul.net": ["WorkspaceAMT/Experimental/Core"],
-        "vceccefinlpa002.amerco.net": ["WorkspaceCisco/main/Core"]
+        "vceccefinlpa002.amerco.net": ["WorkspaceCisco/main/Core"],
+        "ubox.uhaul.net": ["WorkspaceUbox/main/Core"],
     };
 
     const hostname = window.location.hostname;
