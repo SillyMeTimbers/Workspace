@@ -18,6 +18,7 @@
         "amt.uhaul.net": ["WorkspaceAMT/Experimental/Core"],
         "vceccefinlpa002.amerco.net": ["WorkspaceCisco/main/Core"],
         "ubox.uhaul.net": ["WorkspaceUbox/main/Core"],
+        "uhaul.net": ["WorkspaceNET/main/Core"],
     };
 
     const hostname = window.location.hostname;
